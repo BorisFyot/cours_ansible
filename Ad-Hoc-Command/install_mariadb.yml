@@ -1,0 +1,21 @@
+---
+- hosts: db
+  become: yes
+  tasks:
+  - name: Install mariadb-server
+    yum: name=mariadb-server state=present
+  - name: Install mariadb
+    yum: name=mariadb state=present
+  - name: Ensure mariadb is running
+    service: name=mariadb state=started enabled=yes
+  - name: Install mysql
+    yum: name=MySQL-python state=latest
+  - name: Create a New Test DB called wordpress
+    mysql_db: 
+      name="wordpress" 
+      state=present
+  - name: wordpress
+    mysql_user: 
+      name="user01"
+      password="BOURNE"
+      priv="wordpress.*:ALL"

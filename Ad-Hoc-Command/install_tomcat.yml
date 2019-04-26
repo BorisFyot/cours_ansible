@@ -1,0 +1,10 @@
+---
+- hosts: app
+  become: yes
+  tasks:
+  - name: Install java-1.8.0-openjdk.x86_64
+    yum: name=java-1.8.0-openjdk.x86_64 state=present
+  - name: Install tomcat
+    yum: name=tomcat state=present
+  - name: Ensure tomcat is running
+    service: name=tomcat state=started enabled=yes
