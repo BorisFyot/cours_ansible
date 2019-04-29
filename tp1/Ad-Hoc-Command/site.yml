@@ -1,0 +1,4 @@
+---
+- import_playbook: install_mariadb.yml  
+- import_playbook: install_tomcat.yml  
+- import_playbook: install_apache.yml  

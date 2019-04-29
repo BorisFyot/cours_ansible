@@ -1,0 +1,47 @@
+---
+- name: This sets up an httpd webserver
+  hosts: web-server
+  become: yes
+  tasks:
+  - name: Install apache packages 
+    yum:
+      name: httpd
+      state: present
+
+  - name: Creates directory
+    file:
+      path: /usr/local/tomcat-connectors
+      state: directory
+      
+  - name: tomcat | binary download
+    get_url: 
+      url: "http://mirror.nus.edu.sg/apache/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz"
+      dest: "/tmp"
+      timeout: 300
+
+  - name: download tomcat-connectors
+    get_url: url=http://apache.belnet.be/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.41-src.tar.gz dest=/usr/local/tomcat-connectors-1.2.41-src.tar.gz mode=0777
+
+  - name: extract tomcat-connectors
+    unarchive: src=/usr/local/tomcat-connectors-1.2.41-src.tar.gz dest=/usr/local/tomcat-connectors copy=no
+
+  - name: configure tomcat-connectors
+    shell: creates=/usr/local/tomcat-connectors/tomcat-connectors-1.2.41-src/native/config.status chdir=/usr/local/tomcat-connectors/tomcat-connectors-1.2.41-src/native/ ./configure --with-apxs=/usr/sbin/apxs
+
+  - name: compile tomcat-connectors
+    shell: creates=/usr/local/tomcat-connectors/tomcat-connectors-1.2.41-src/native/apache-2.0/mod_jk.so chdir=/usr/local/tomcat-connectors/tomcat-connectors-1.2.41-src/native/ make
+
+  - name: ensure httpd is running
+    service:
+      name: httpd 
+      state: started
+
+  # - name: Open port 80 for http access
+  #   firewalld:
+  #     service: http
+  #     permanent: true
+  #     state: enabled
+  # - name: Restart the firewalld service to load in the firewall changes
+  #   service: 
+  #     name: firewalld 
+  #     state: restarted

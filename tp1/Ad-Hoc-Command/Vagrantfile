@@ -30,7 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # static ip address
         web.vm.network :private_network, ip: "192.168.100.4"
         #provisionning configuration for ansible
-   		config.vm.provision "ansible" do |ansible|
+   		web.vm.provision "ansible" do |ansible|
             ansible.inventory_path = "./inventory"
         	ansible.playbook="install_apache.yml"
             ansible.limit = "web"
@@ -43,22 +43,37 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # static ip address
         app.vm.network :private_network, ip: "192.168.100.5"
         #provisionning configuration for ansible
-   		config.vm.provision "ansible" do |ansible|
+   		app.vm.provision "ansible" do |ansible|
             ansible.inventory_path = "./inventory"
         	ansible.playbook="install_tomcat.yml"
             ansible.limit = "app"
     	end
     end
+    
     # Database server
     config.vm.define "database" do |db|
         db.vm.hostname = "devops-db.dev"
         # static ip address
         db.vm.network :private_network, ip: "192.168.100.6"
         #provisionning configuration for ansible
-   		config.vm.provision "ansible" do |ansible|
+   		db.vm.provision "ansible" do |ansible|
             ansible.inventory_path = "./inventory"
         	ansible.playbook="install_mariadb.yml"
             ansible.limit = "db"
     	end
     end
+
+   # Database server
+   # config.vm.define "prometheus" do |prometheus|
+   #     prometheus.vm.hostname = "devops-db.dev"
+        # static ip address
+   #     prometheus.vm.network :private_network, ip: "192.168.100.7"
+        #provisionning configuration for ansible
+   #     prometheus.vm.provision "ansible" do |ansible|
+   #         ansible.inventory_path = "./inventory"
+   #         ansible.playbook="install_prometheus.yml"
+   #         ansible.limit = "prometheus"
+   #     end
+   # end
+
 end

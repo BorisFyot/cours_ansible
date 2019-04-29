@@ -4,8 +4,6 @@
   tasks:
   - name: Install mariadb-server
     yum: name=mariadb-server state=present
-  - name: Install mariadb
-    yum: name=mariadb state=present
   - name: Ensure mariadb is running
     service: name=mariadb state=started enabled=yes
   - name: Install mysql
