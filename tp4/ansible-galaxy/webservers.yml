@@ -1,0 +1,18 @@
+---
+- name: APACHE  |  INSTALL
+  hosts: web-server
+  become: yes
+
+#  vars:
+#    php_enable_php_fpm: true
+#    apache_vhosts:
+#      - servername: "wordpress"
+#        documentroot: "/var/www/html"
+#        extra_parameters: |
+#              ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000/var/www/html"
+
+  roles:
+#    - geerlingguy.apache
+#    - geerlingguy.php
+#    - geerlingguy.apache-php-fpm
+    - apache

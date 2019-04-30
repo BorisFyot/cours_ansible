@@ -1,5 +1,5 @@
 - name: Install tomcat
-  hosts: tomcat-server
+  hosts: tomcatserver
   become: True
   become_method: sudo
   tasks:

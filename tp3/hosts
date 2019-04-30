@@ -1,23 +1,20 @@
-# Lines beginning with a # are comments, and are only included for
-# illustration. These comments are overkill for most inventory files.
-
 # Tomcat
-[tomcat-server]
+[tomcatserver]
 192.168.100.16
 
 # Apache
-[apache-server]
+[apacheserver]
 192.168.100.17
 
 # MariaDB
-[db-server]
+[dbserver]
 192.168.100.18
 
-# Group 'multi' with all servers
+# Group multi with all servers
 [all:children]
-tomcat-server
-apache-server
-db-server
+tomcatserver
+apacheserver
+dbserver
 
 # Variables that will be applied to all servers
 [all:vars]

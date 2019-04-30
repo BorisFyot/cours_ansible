@@ -1,0 +1,6 @@
+#From Galaxy
+- src: robertdebock.tomcat
+- src: robertdebock.service
+- src: geerlingguy.apache
+- src: geerlingguy.php
+- src: geerlingguy.apache-php-fpm
